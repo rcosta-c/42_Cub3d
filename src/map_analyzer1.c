@@ -36,6 +36,8 @@ void    count_char_map(t_cub *cub)
 
     x = 0;
     counter = 0;
+	if(cub->error.valid_map == false)
+		return;
 	while(cub->map->map[x])
 	{
 		xx = 0;
@@ -47,7 +49,7 @@ void    count_char_map(t_cub *cub)
 		}
 		x++;
 	}
-	if (counter > 4)
+	if (counter != 1)
 		cub->error.valid_map = false;
 }
 
@@ -58,6 +60,8 @@ void	analize_map(t_cub *cub)
     x = 0;
     analize_char_map(cub, x);
 	count_char_map(cub);
+	if(cub->error.valid_map == false)
+		return;
 	check_map_walls(cub);
 }
 

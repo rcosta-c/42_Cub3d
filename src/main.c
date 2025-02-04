@@ -49,7 +49,7 @@ int main(int ac, char **av)
 
 		if(cub->error.valid_map == false)
 		{
-			printf("AAAA-Error!\n");
+			printf("A-Error!\n");
 			return(1);
 		}
 
