@@ -2,7 +2,7 @@
 
 void    init_base(t_cub *cub)
 {
-	cub->map = malloc(sizeof(t_map) * 1);
+	cub->map = ft_calloc(sizeof(t_map) , 1);
     cub->error.valid_map = true;
     cub->error.no_invalid = true;
     cub->error.so_invalid = true;

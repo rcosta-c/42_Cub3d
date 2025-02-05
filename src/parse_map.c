@@ -16,7 +16,6 @@ int	map_copy(t_cub *cub, char *file)
 		line = get_next_line(fd);
 		if (!line)
 		{
-			cub->map->file[x] = NULL;
 			free(line);
 			break ;
 		}
@@ -27,6 +26,7 @@ int	map_copy(t_cub *cub, char *file)
 		free(line);
 		x++;
 	}
+	cub->map->file[x] = '\0';
 	close(fd);
 	return(x);
 }

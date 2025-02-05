@@ -97,31 +97,31 @@ void	search_coords(t_cub *cub, int x)
 void	validate_info(t_cub *cub)
 {
 	if (cub->map->coords_counter != 6)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if (!cub->map->f_info || ft_strlen(cub->map->f_info) < 7)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if (!cub->map->c_info || ft_strlen(cub->map->c_info) < 7)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if (!cub->map->no_file || ft_strlen(cub->map->no_file) < 8)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if (!cub->map->so_file || ft_strlen(cub->map->so_file) < 8)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if (!cub->map->ea_file || ft_strlen(cub->map->ea_file) < 8)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if (!cub->map->we_file || ft_strlen(cub->map->we_file) < 8)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if(cub->map->c_rgb.r < 0 || cub->map->c_rgb.r > 255)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if(cub->map->c_rgb.g < 0 || cub->map->c_rgb.g > 255)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if(cub->map->c_rgb.b < 0 || cub->map->c_rgb.b > 255)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if(cub->map->f_rgb.r < 0 || cub->map->f_rgb.r > 255)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if(cub->map->f_rgb.g < 0 || cub->map->f_rgb.g > 255)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 	else if(cub->map->f_rgb.b < 0 || cub->map->f_rgb.b > 255)
-		exit(cub->error.valid_map = false);
+		cub->error.valid_map = false;
 }
 
 
@@ -195,7 +195,7 @@ void    map_info_sniffer(t_cub *cub)
 	int x;
 
 	x = 0;
-	while(cub->map->file[x])
+	while(x < cub->map->map_lines_counter)
 	{
 		search_coords(cub, x);
 		x++;

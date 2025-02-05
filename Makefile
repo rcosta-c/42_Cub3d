@@ -9,7 +9,7 @@
 
 NAME        := cub3d
 CC        := gcc
-FLAGS    := -Wall -Wextra -Werror 
+FLAGS    := -g -Wall -Wextra -Werror 
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
@@ -23,6 +23,7 @@ SRCS        :=      src/main.c \
                           src/free.c \
                           lib/libft/ft_lstlast.c \
                           lib/libft/ft_isalpha.c \
+                          lib/libft/ft_isspace.c \
                           lib/libft/ft_strdup.c \
                           lib/libft/ft_strnstr.c \
                           lib/libft/ft_memchr.c \

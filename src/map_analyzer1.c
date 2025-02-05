@@ -49,7 +49,7 @@ void    count_char_map(t_cub *cub)
 		}
 		x++;
 	}
-	if (counter != 1)
+	if (counter > 4)
 		cub->error.valid_map = false;
 }
 

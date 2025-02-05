@@ -21,7 +21,7 @@ int main(int ac, char **av)
 {
 	t_cub   *cub;
 
-	cub = malloc(sizeof(t_cub) * 1);
+	cub = ft_calloc(sizeof(t_cub) , 1);
 	if (ac != 2)
 		return(printf("Error!\n"));
 	else
@@ -39,7 +39,7 @@ int main(int ac, char **av)
 			printf("Error!\n");
 			return(1);
 		}
-		cub->map->file = malloc(sizeof(char *) * cub->map->map_lines_counter + 1);
+		cub->map->file = ft_calloc(sizeof(char *) , cub->map->map_lines_counter + 1);
 		map_copy(cub, av[1]);
 
 		map_info_sniffer(cub);
@@ -63,7 +63,7 @@ int main(int ac, char **av)
 
 
 
-		printf("numero de linhas = %d\n ficheiro = %s", cub->map->map_lines_counter, av[1]);
+	printf("numero de linhas = %d\n ficheiro = %s", cub->map->map_lines_counter, av[1]);
 
 		printf("\n\nNO = %s\n", cub->map->no_file);
 		printf("SO = %s\n", cub->map->so_file);
@@ -74,11 +74,13 @@ int main(int ac, char **av)
 		printf("F = %s\n", cub->map->f_info);
 		printf("valores em f_rgb - r=%d  g=%d  b=%d\n\n", cub->map->f_rgb.r, cub->map->f_rgb.g, cub->map->f_rgb.b);
 		printf("valores em c_rgb - r=%d  g=%d  b=%d\n\n", cub->map->c_rgb.r, cub->map->c_rgb.g, cub->map->c_rgb.b);
+		printf("maplinecounter=%d\n", cub->map->map_lines_counter);
+		printf("maplines=%d\n", cub->map->map_lines);
 
 		int xx = 0;
 		while(cub->map->map[xx])
 		{
-			printf("line%d=%s", xx, cub->map->map[xx]);
+			printf("line%d=%s\n", xx, cub->map->map[xx]);
 			xx++;
 		}
 
