@@ -44,7 +44,12 @@ void    count_char_map(t_cub *cub)
 		while(cub->map->map[x][xx])
 		{
 			if(cub->map->map[x][xx] == 'N' || cub->map->map[x][xx] == 'S' || cub->map->map[x][xx] == 'W' || cub->map->map[x][xx] == 'E')
+			{
+				cub->game.player = cub->map->map[x][xx];
+				cub->game.player_x = x;
+				cub->game.player_y = xx;
 				counter++;
+			}
 			xx++;
 		}
 		x++;

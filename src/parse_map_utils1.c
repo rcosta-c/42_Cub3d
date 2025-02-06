@@ -12,7 +12,13 @@ void	copy_map_file(t_cub *cub, int x, int coord)
 	{
 		xx++;
 	}
-	while(cub->map->file[x][xx])
+	if(cub->map->file[x][xx] == '.')
+	{
+		xx++;
+		if(cub->map->file[x][xx] == '/')
+			xx++;
+	}
+	while(cub->map->file[x][xx] && cub->map->file[x][xx] != '\n')
 	{
 		temp[z] = cub->map->file[x][xx];
 		xx++;

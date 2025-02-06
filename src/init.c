@@ -19,3 +19,9 @@ void    init_base(t_cub *cub)
     cub->map->fd_ea = -1;
 
 }
+
+void    init_mlx(t_cub *cub)
+{
+    (void)cub;
+    cub->game.texture = ft_calloc(sizeof(t_tex), 4);
+}

@@ -9,21 +9,13 @@
 
 NAME        := cub3d
 CC        := gcc
-FLAGS    := -g -Wall -Wextra -Werror 
+FLAGS    := -Wall -Wextra -Werror 
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
 
-SRCS        :=      src/main.c \
-                          src/parse_map.c \
-                          src/parse_map_utils1.c \
-                          src/map_analyzer1.c \
-                          src/map_analyzer2.c \
-                          src/init.c \
-                          src/free.c \
-                          lib/libft/ft_lstlast.c \
+SRCS        :=      lib/libft/ft_lstlast.c \
                           lib/libft/ft_isalpha.c \
-                          lib/libft/ft_isspace.c \
                           lib/libft/ft_strdup.c \
                           lib/libft/ft_strnstr.c \
                           lib/libft/ft_memchr.c \
@@ -41,6 +33,7 @@ SRCS        :=      src/main.c \
                           lib/libft/ft_isprint.c \
                           lib/libft/ft_atoi.c \
                           lib/libft/ft_isdigit.c \
+                          lib/libft/ft_isspace.c \
                           lib/libft/ft_memset.c \
                           lib/libft/ft_lstnew.c \
                           lib/libft/ft_strrchr.c \
@@ -68,6 +61,14 @@ SRCS        :=      src/main.c \
                           lib/libft/ft_toupper.c \
                           lib/gnl/get_next_line_utils.c \
                           lib/gnl/get_next_line.c \
+                          src/main.c \
+                          src/init.c \
+                          src/game.c \
+                          src/parse_map_utils1.c \
+                          src/free.c \
+                          src/map_analyzer2.c \
+                          src/parse_map.c \
+                          src/map_analyzer1.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
@@ -87,21 +88,26 @@ BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 RM		    := rm -f
 
-${NAME}:	${OBJS}
-			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} -o ${NAME} ${OBJS}
+UNAME		:=	$(shell uname)
+
+$(NAME): ${OBJS}
+			@echo "$(GREEN)Linux compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
+			@chmod 777 ./lib/mlx/configure
+			@ $(MAKE) -C ./lib/mlx all
+			$(CC) $(CFLAGS) -g3 -o $(NAME) $(OBJS) -Imlx_linux -Lmlx_linux -lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
+
 
 all:		${NAME}
 
-bonus:		all
-
 clean:
 			@ ${RM} *.o */*.o */*/*.o
+			@ rm -rf $(NAME).dSYM >/dev/null 2>&1
 			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)objs ✔️"
 
 fclean:		clean
 			@ ${RM} ${NAME}
+			@ $(MAKE) -C ./lib/mlx clean 
 			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)binary ✔️"
 
 re:			fclean all

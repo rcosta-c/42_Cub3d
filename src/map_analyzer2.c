@@ -29,9 +29,21 @@ void check_map_walls(t_cub *cub)
 
     cols = get_max_width(cub->map->map, cub->map->map_lines);
     fixed_map = ft_calloc(sizeof(char *), cub->map->map_lines + 2);
+    while(cub->map->map[i])
+    {
+        fixed_map[i] = ft_calloc(sizeof(char), cols + 1);
+        j = 0;
+        while(j <= cols)
+        {
+            fixed_map[i][j] = '1';
+            j++;
+        }
+        fixed_map[i][cols] = '\0';
+        i++;
+    }
+    i = 0;
     while (cub->map->map[i])
     {
-        fixed_map[i] = ft_calloc(sizeof(char), 500);
         j = 0;
         while (cub->map->map[i][j])
         {
@@ -41,7 +53,6 @@ void check_map_walls(t_cub *cub)
                 fixed_map[i][j] = cub->map->map[i][j];
             j++;
         }
-        fixed_map[i][cols] = '\0';
         i++;
     }
     i = 0;
