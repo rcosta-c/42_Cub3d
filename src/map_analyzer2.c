@@ -66,9 +66,9 @@ void check_map_walls(t_cub *cub)
         i++;
     }
     i = 0;
-    while (fixed_map[cub->map->map_lines - 2][i])
+    while (fixed_map[cub->map->map_lines - 1][i])
     {
-        if (fixed_map[cub->map->map_lines - 2][i] != '1')
+        if (fixed_map[cub->map->map_lines - 1][i] != '1')
         {
             cub->error.valid_map = false;
             break ;
@@ -90,15 +90,16 @@ void check_map_walls(t_cub *cub)
     while (i < cub->map->map_lines - 1)
     {
         j = 1;
-        while (j < cols - 1) {
-            if (fixed_map[i][j] == '0' || fixed_map[i][j] == 'N' || fixed_map[i][j] == 'S' || fixed_map[i][j] == 'E' || fixed_map[i][j] == 'W') {
+        while (j < cols - 1) 
+        {
+            if (fixed_map[i][j] == '0' || fixed_map[i][j] == 'N' || fixed_map[i][j] == 'S' || fixed_map[i][j] == 'E' || fixed_map[i][j] == 'W')
+            {
                 if (fixed_map[i - 1][j] == ' ' || fixed_map[i + 1][j] == ' ' ||
-                    fixed_map[i][j - 1] == ' ' || fixed_map[i][j + 1] == ' ') {
+                    fixed_map[i][j - 1] == ' ' || fixed_map[i][j + 1] == ' ')
                     {
                         cub->error.valid_map = false;
                         break ;
                     }
-                }
             }
             j++;
         }
@@ -112,6 +113,7 @@ void check_map_walls(t_cub *cub)
     }
     free(cub->map->map);
     cub->map->map = fixed_map;
+    if (cub->error.valid_map == false)
+        free_exit(cub, "Invalid Map(walls)");
     return;
 }
-

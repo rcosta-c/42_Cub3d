@@ -71,66 +71,27 @@ int main(int ac, char **av)
 
 	cub = ft_calloc(sizeof(t_cub) , 1);
 	if (ac != 2)
-		return(printf("Error!\n"));
+		return(printf("Error!Only 1 map as argument\n"));
 	else
 	{
 		if(validate_avmap(av[1]) == false)
-		{
-			printf("Error!\n");
-			return (1);
-		}
-		init_base(cub);
-		
-		cub->map->map_lines_counter = map_1st_reading(av[1]);
+			free_exit(cub, "Not a Cub file");
+		init_base(cub, av);
 		if (cub->map->map_lines_counter == 0)
-		{
-			printf("Error!\n");
-			return(1);
-		}
-		cub->map->file = ft_calloc(sizeof(char *) , cub->map->map_lines_counter + 1);
+			free_exit(cub, "Empty Map");
 		map_copy(cub, av[1]);
-
 		map_info_sniffer(cub);
 		extract_map(cub);
 		analize_map(cub);
-
 		init_mlx(cub);
-
 //print_tests(cub, av);
 
 		init_game(cub);
 		mlx_hook(cub->game.win, 2, 1L << 0, handle_key, &cub->game);
-		
-		//render_scene(cub);
-    	//mlx_put_image_to_window(cub->game.mlx, cub->game.win, cub->game.texture->img, 0, 0);
-
 		start_game(cub);
-
-		
-	//	mlx_loop(cub->game.mlx);
-
-		if(cub->error.valid_map == false)
-		{
-			printf("A-Error!\n");
-			return(1);
-		}
-
-
-
-
-
-
-
-
-
-
-
-	
-
 
 	}
 
 	free_cub(cub);
-
 	return (0);
 }

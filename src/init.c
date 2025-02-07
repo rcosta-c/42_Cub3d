@@ -1,8 +1,13 @@
 #include "../includes/cub.h"
 
-void    init_base(t_cub *cub)
+void    init_base(t_cub *cub, char **av)
 {
 	cub->map = ft_calloc(sizeof(t_map) , 1);
+    cub->map->map_lines_counter = map_1st_reading(av[1], cub);
+    cub->map->file = ft_calloc(sizeof(char *) , cub->map->map_lines_counter + 1);
+    cub->map->last_line_info = 0;
+    cub->map->map_lines = 0;
+    cub->map->coords_counter = 0;
     cub->error.valid_map = true;
     cub->error.no_invalid = true;
     cub->error.so_invalid = true;
@@ -11,13 +16,6 @@ void    init_base(t_cub *cub)
     cub->error.char_invalid = true;
     cub->error.f_invalid = true;
     cub->error.c_invalid = true;
-
-    cub->map->coords_counter = 0;
-    cub->map->fd_no = -1;
-    cub->map->fd_so = -1;
-    cub->map->fd_we = -1;
-    cub->map->fd_ea = -1;
-
 }
 
 void    init_mlx(t_cub *cub)

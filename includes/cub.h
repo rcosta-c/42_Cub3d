@@ -49,6 +49,7 @@ typedef struct s_error
 
 typedef struct s_map
 {
+	int		last_line_info;
 	int		map_lines_counter;
 	int		coords_counter;
 	char	*no_file;
@@ -57,10 +58,7 @@ typedef struct s_map
 	char	*ea_file;
 	char	*c_info;
 	char	*f_info;
-	int 	fd_no;
-	int 	fd_so;
-	int 	fd_we;
-	int 	fd_ea;
+
 	int		map_lines;
 	char    **map;
 	char	**file;
@@ -126,19 +124,22 @@ void	render_scene(t_cub *cub);
 
 
 //init
-void    init_base(t_cub *cub);
+void    init_base(t_cub *cub, char **av);
 void    init_mlx(t_cub *cub);
 
 
 //parse_maps
-int		map_1st_reading(char *file);
+int		map_1st_reading(char *file, t_cub *cub);
 int		map_copy(t_cub *cub, char *file);
 
 
 //parse_map_utils1//
 void    map_info_sniffer(t_cub *cub);
 void	search_coords(t_cub *cub, int x);
+void	search_coords_player(t_cub *cub, int x);
 void	copy_map_file(t_cub *cub, int x, int coord);
+void	copy_map_file_helper(t_cub *cub, int x, int coord, char *temp);
+void	validate_color(t_cub *cub);
 
 
 //map_analyzer1
@@ -154,6 +155,9 @@ void    check_map_walls(t_cub *cub);
 
 //free
 void    free_cub(t_cub *cub);
+void	free_game(t_cub *cub);
+void	free_exit(t_cub *cub, char *msg);
+void	free_double_pointer(char **ptr, int max);
 
 
 #endif

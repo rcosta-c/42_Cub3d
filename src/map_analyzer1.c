@@ -25,7 +25,7 @@ void    analize_char_map(t_cub *cub, int x)
 		x++;
 	}
 	if (flag == false)
-		cub->error.valid_map = false;
+		free_exit(cub, "Invalid Map(strange char)");
 }
 
 void    count_char_map(t_cub *cub)
@@ -55,7 +55,37 @@ void    count_char_map(t_cub *cub)
 		x++;
 	}
 	if (counter > 4)
-		cub->error.valid_map = false;
+		free_exit(cub, "Invalid Map(wrong number of coords)");
+}
+
+
+void	analize_empty_lines(t_cub *cub)
+{
+	int x;
+	int xx;
+	int counter;
+	
+	x = 0;
+	while(cub->map->map[x] && x < cub->map->map_lines)
+	{
+		xx = 0;
+		counter = 0;
+		while(cub->map->map[x][xx])
+		{
+			if(ft_strlen(cub->map->map[x]) > 0
+				&& (cub->map->map[x][xx] != ' ' || cub->map->map[x][xx] != '\n'))
+			{
+				counter++;
+			}
+			xx++;
+		}
+		if(counter == 0)
+		{
+			cub->error.valid_map = false;
+			return;
+		}
+		x++;
+	}
 }
 
 void	analize_map(t_cub *cub)
@@ -64,29 +94,38 @@ void	analize_map(t_cub *cub)
 
     x = 0;
     analize_char_map(cub, x);
+	analize_empty_lines(cub);
+	if(cub->error.valid_map == false)
+		free_exit(cub, "Invalid Map(empty lines)");
 	count_char_map(cub);
 	if(cub->error.valid_map == false)
-		return;
+		free_exit(cub, "Invalid Map(strange char)");
 	check_map_walls(cub);
+}
+
+void	update_last_line(t_cub *cub)
+{
+	int last;
+
+	last = cub->map->last_line_info;
+	last++;
+	if(ft_strlen(cub->map->file[last]) >= 1 && cub->map->file[last][0] == '\n')
+		last++;
+	if(ft_strlen(cub->map->file[last]) > 1)
+		cub->map->last_line_info = last;
 }
 
 void	extract_map(t_cub *cub)
 {
-	int	min;
-	int	x;
+	int x;
+	int min;
 
 	x = 0;
-	min = cub->map->map_lines_counter - 1;
-	while(cub->map->file[min])
-	{
-		if(ft_strlen(cub->map->file[min]) == 1 && cub->map->file[min][0] == '\n')
-			break;
-		min--;
-	}
-	cub->map->map = malloc(sizeof(char *) * (cub->map->map_lines_counter - min + 1));
-	cub->map->map_lines = cub->map->map_lines_counter - min;
-	min++;
-	while(min < cub->map->map_lines_counter)
+	update_last_line(cub);
+	min = cub->map->last_line_info;
+	cub->map->map_lines = cub->map->map_lines_counter - cub->map->last_line_info;
+	cub->map->map = malloc(sizeof(char *) * (cub->map->map_lines + 2));
+	while(x < cub->map->map_lines)
 	{
 		cub->map->map[x] = ft_strdup(cub->map->file[min]);
 		min++;

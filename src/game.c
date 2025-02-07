@@ -19,10 +19,7 @@ static void load_texture(t_cub *cub, int x, char *path)
     cub->game.texture[x].img = mlx_xpm_file_to_image(cub->game.mlx, path, 
 		&cub->game.texture[x].width, &cub->game.texture[x].height);
     if (!cub->game.texture[x].img)
-	{
-        printf("Error!\n");
-        exit(1);
-    }
+        free_exit(cub, "Loading Texture");
     cub->game.texture[x].addr = (int *)mlx_get_data_addr(cub->game.texture[x].img,
 		&cub->game.texture[x].bpp, 
 		&cub->game.texture[x].line_len,
@@ -139,16 +136,12 @@ void put_pixel_to_img(t_cub *cub, int x, int y, int color)
 void init_game(t_cub *cub)
 {
 	cub->game.mlx = mlx_init();
-	if (!cub->game.mlx) {
-		printf("Error!\n");
-		exit(1);
-	}
+	if (!cub->game.mlx)
+		free_exit(cub, "Mlx error");
 
 	cub->game.win = mlx_new_window(cub->game.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
-	if (!cub->game.win){
-		printf("Error\n");
-		exit(1);
-	}
+	if (!cub->game.win)
+        free_exit(cub, "Mlx win error");
 
 	cub->game.img = mlx_new_image(cub->game.mlx, WIN_WIDTH, WIN_HEIGHT);
 	cub->game.addr = mlx_get_data_addr(cub->game.img, &cub->game.bpp, &cub->game.line_len, &cub->game.endian);

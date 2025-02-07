@@ -1,5 +1,32 @@
 #include "../includes/cub.h"
 
+void	copy_map_file_helper(t_cub *cub, int x, int coord, char *temp)
+{
+	if(coord == 0 && !cub->map->no_file) // 0 = NO
+	{
+		cub->map->no_file = ft_strdup(temp);
+	}
+	else if(coord == 1 && !cub->map->so_file) // 0 = SO
+	{
+		cub->map->so_file = ft_strdup(temp);
+	}
+	else if(coord == 2 && !cub->map->we_file) // 0 = WE
+	{
+		cub->map->we_file = ft_strdup(temp);
+	}
+	else if(coord == 3 && !cub->map->ea_file) // 0 = EA
+	{
+		cub->map->ea_file = ft_strdup(temp);
+	}
+	else if(coord == 4 && !cub->map->f_info) // 0 = F
+		cub->map->f_info = ft_strdup(temp);
+	else if(coord == 5 && !cub->map->c_info) // 0 = C
+		cub->map->c_info = ft_strdup(temp);
+    cub->map->coords_counter++;
+	if (x > cub->map->last_line_info)
+		cub->map->last_line_info = x;
+}
+
 void	copy_map_file(t_cub *cub, int x, int coord)
 {
 	int 	xx;
@@ -25,38 +52,12 @@ void	copy_map_file(t_cub *cub, int x, int coord)
 		z++;
 	}
 	temp[z] = '\0';
-	if(coord == 0 && !cub->map->no_file) // 0 = NO
-	{
-		cub->map->no_file = ft_strdup(temp);
-	}
-	else if(coord == 1 && !cub->map->so_file) // 0 = SO
-	{
-		cub->map->so_file = ft_strdup(temp);
-	}
-	else if(coord == 2 && !cub->map->we_file) // 0 = WE
-	{
-		cub->map->we_file = ft_strdup(temp);
-	}
-	else if(coord == 3 && !cub->map->ea_file) // 0 = EA
-	{
-		cub->map->ea_file = ft_strdup(temp);
-	}
-	else if(coord == 4 && !cub->map->f_info) // 0 = F
-	{
-		cub->map->f_info = ft_strdup(temp);
-	}
-	else if(coord == 5 && !cub->map->c_info) // 0 = C
-	{
-		cub->map->c_info = ft_strdup(temp);
-	}
-    cub->map->coords_counter++;
+	copy_map_file_helper(cub, x, coord, temp);
 }
 
-void	search_coords(t_cub *cub, int x)
+void	search_coords_player(t_cub *cub, int x)
 {
-	if (ft_strlen(cub->map->file[x]) > 6)
-	{
-		if (cub->map->file[x][0] == 'N'
+	if (cub->map->file[x][0] == 'N'
 				&& cub->map->file[x][1] == 'O'
 				&& cub->map->file[x][2] == ' ')
 				{
@@ -80,6 +81,16 @@ void	search_coords(t_cub *cub, int x)
 				{
 					copy_map_file(cub, x, 3);
 				}
+}
+void	search_coords(t_cub *cub, int x)
+{
+	if (ft_strlen(cub->map->file[x]) > 6)
+	{
+		if(cub->map->file[x][0] == 'N' || cub->map->file[x][0] == 'S'
+			|| cub->map->file[x][0] == 'E' || cub->map->file[x][0] == 'W')
+			{
+				search_coords_player(cub, x);
+			}
 		else if (cub->map->file[x][0] == 'C'
 				&& cub->map->file[x][1] == ' ')
 				{
@@ -96,8 +107,24 @@ void	search_coords(t_cub *cub, int x)
 	{
 		cub->error.char_invalid = true;
 		cub->error.valid_map = false;
+		free_exit(cub, "Invalid Coords");
 	}
+}
 
+void	validate_color(t_cub *cub)
+{
+	if(cub->map->c_rgb.r < 0 || cub->map->c_rgb.r > 255)
+		cub->error.valid_map = false;
+	else if(cub->map->c_rgb.g < 0 || cub->map->c_rgb.g > 255)
+		cub->error.valid_map = false;
+	else if(cub->map->c_rgb.b < 0 || cub->map->c_rgb.b > 255)
+		cub->error.valid_map = false;
+	else if(cub->map->f_rgb.r < 0 || cub->map->f_rgb.r > 255)
+		cub->error.valid_map = false;
+	else if(cub->map->f_rgb.g < 0 || cub->map->f_rgb.g > 255)
+		cub->error.valid_map = false;
+	else if(cub->map->f_rgb.b < 0 || cub->map->f_rgb.b > 255)
+		cub->error.valid_map = false;
 }
 
 void	validate_info(t_cub *cub)
@@ -116,18 +143,6 @@ void	validate_info(t_cub *cub)
 		cub->error.valid_map = false;
 	else if (!cub->map->we_file || ft_strlen(cub->map->we_file) < 8)
 		cub->error.valid_map = false;
-	else if(cub->map->c_rgb.r < 0 || cub->map->c_rgb.r > 255)
-		cub->error.valid_map = false;
-	else if(cub->map->c_rgb.g < 0 || cub->map->c_rgb.g > 255)
-		cub->error.valid_map = false;
-	else if(cub->map->c_rgb.b < 0 || cub->map->c_rgb.b > 255)
-		cub->error.valid_map = false;
-	else if(cub->map->f_rgb.r < 0 || cub->map->f_rgb.r > 255)
-		cub->error.valid_map = false;
-	else if(cub->map->f_rgb.g < 0 || cub->map->f_rgb.g > 255)
-		cub->error.valid_map = false;
-	else if(cub->map->f_rgb.b < 0 || cub->map->f_rgb.b > 255)
-		cub->error.valid_map = false;
 }
 
 
@@ -141,7 +156,6 @@ void	split_color_f(t_cub *cub)
 	cub->map->f_rgb.r = ft_atoi(res[0]);
 	cub->map->f_rgb.g = ft_atoi(res[1]);
 	cub->map->f_rgb.b = ft_atoi(res[2]);
-
 	while(res[x])
 	{
 		free(res[x]);
@@ -160,7 +174,6 @@ void	split_color_c(t_cub *cub)
 	cub->map->c_rgb.r = ft_atoi(res[0]);
 	cub->map->c_rgb.g = ft_atoi(res[1]);
 	cub->map->c_rgb.b = ft_atoi(res[2]);
-
 	while(res[x])
 	{	free(res[x]);
 		x++;
@@ -208,4 +221,9 @@ void    map_info_sniffer(t_cub *cub)
 	}
 	split_color_process(cub);
 	validate_info(cub);
+	if(cub->error.valid_map == false)
+		free_exit(cub, "Invalid info for Coords");
+	validate_color(cub);
+	if(cub->error.valid_map == false)
+		free_exit(cub, "Invalid Color");
 }

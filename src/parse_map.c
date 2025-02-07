@@ -10,7 +10,7 @@ int	map_copy(t_cub *cub, char *file)
 	x = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		printf("Error opening the file(map)");
+		free_exit(cub, "Error opening the file(map)");
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -31,7 +31,7 @@ int	map_copy(t_cub *cub, char *file)
 	return(x);
 }
 
-int	map_1st_reading(char *file)
+int	map_1st_reading(char *file, t_cub *cub)
 {
 	char	*line;
 	int		x;
@@ -40,7 +40,7 @@ int	map_1st_reading(char *file)
 	x = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return(x);
+		free_exit(cub, "Error opening the file(map)");
 	while (1)
 	{
 		line = get_next_line(fd);
