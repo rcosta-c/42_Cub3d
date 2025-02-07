@@ -12,7 +12,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
-#include <mlx.h>
+//#include <mlx.h>
 
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600

@@ -94,7 +94,7 @@ $(NAME): ${OBJS}
 			@echo "$(GREEN)Linux compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
 			@chmod 777 ./lib/mlx/configure
 			@ $(MAKE) -C ./lib/mlx all
-			$(CC) $(CFLAGS) -g3 -o $(NAME) $(OBJS) -Imlx_linux -Lmlx_linux -lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm
+			$(CC) $(CFLAGS) -g3 -o $(NAME) $(OBJS) -L ./lib/mlx -lmlx -Ilmlx -lXext -lX11
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
 
