@@ -69,6 +69,10 @@ SRCS        :=      lib/libft/ft_lstlast.c \
                           src/map_analyzer2.c \
                           src/parse_map.c \
                           src/map_analyzer1.c \
+                          src/load_textures.c \
+                          src/player.c \
+                          src/render_map.c \
+                          src/render_utils.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
@@ -94,7 +98,7 @@ $(NAME): ${OBJS}
 			@echo "$(GREEN)Linux compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
 			@chmod 777 ./lib/mlx/configure
 			@ $(MAKE) -C ./lib/mlx all
-			$(CC) $(CFLAGS) -g3 -o $(NAME) $(OBJS) -L ./lib/mlx -lmlx -Ilmlx -lXext -lX11
+			$(CC) $(CFLAGS) -g3 -o $(NAME) $(OBJS) -L ./lib/mlx -lmlx -Ilmlx -lXext -lX11 -lm
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
 

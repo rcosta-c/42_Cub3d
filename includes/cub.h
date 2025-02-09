@@ -111,17 +111,28 @@ typedef struct s_cub
 
 
 //game
-int		handle_key(t_cub *cub, int key);
 int		clean_exit(t_cub *cub);
 void	init_game(t_cub *cub);
-void	render_scene(t_cub *cub);
 
 
-
-
-
-
-
+void load_textures(t_game *game, t_map *map);
+void render_map(t_cub *cub);
+int check_collision(t_map *map, double new_x, double new_y);
+void update_player(t_cub *cub, int key);
+int handle_input(int key, t_cub *cub);
+void perform_dda(t_cub *cub, int *map_x, int *map_y, double *side_dist_x, 
+                 double *side_dist_y, double delta_dist_x, double delta_dist_y, 
+                 int step_x, int step_y, int *side);
+void compute_ray_direction(t_cub *cub, int x, double *cam, double *rd_x, double *rd_y);
+void compute_initial_values(t_cub *cub, int *mx, int *my);
+void compute_steps_and_distances(t_cub *cub, double rd_x, double rd_y, int mx, int my,
+                                 int *step_x, int *step_y, double *sd_x, double *sd_y,
+                                 double *ddx, double *ddy);
+void compute_ray_parameters(t_cub *cub, int x, int *mx, int *my, double *rd_x, double *rd_y,
+                              int *step_x, int *step_y, double *sd_x, double *sd_y,
+                              double *ddx, double *ddy);
+void compute_wall(t_cub *cub, double rd_x, double rd_y, int step_x, int step_y,
+                  int mx, int my, int side, double *perp, int *lh, int *ds, int *de);
 
 //init
 void    init_base(t_cub *cub, char **av);
