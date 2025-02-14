@@ -6,19 +6,26 @@
 /*   By: cde-paiv <cde-paiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:50:54 by cde-paiv          #+#    #+#             */
-/*   Updated: 2025/02/09 16:51:12 by cde-paiv         ###   ########.fr       */
+/*   Updated: 2025/02/14 22:51:59 by cde-paiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
+void my_mlx_pixel_put(t_game *game, int x, int y, int color)
+{
+    char *dst;
+
+    dst = game->addr + (y * game->line_len + x * (game->bpp / 8));
+    *(unsigned int*)dst = color;
+}
+
 void draw_ceiling(t_cub *cub, int x, int ds)
 {
-    int y;
-    y = 0;
+    int y = 0;
     while (y < ds)
     {
-        mlx_pixel_put(cub->game.mlx, cub->game.win, x, y, cub->game.ceiling_color);
+        my_mlx_pixel_put(&(cub->game), x, y, cub->game.ceiling_color);
         y++;
     }
 }
@@ -32,18 +39,17 @@ void draw_wall(t_cub *cub, int x, int ds, int de, t_tex *tex, int lh, int texX)
         d = y * 256 - WIN_HEIGHT * 128 + lh * 128;
         texY = ((d * tex->height) / lh) / 256;
         color = ((int *)tex->addr)[texY * tex->width + texX];
-        mlx_pixel_put(cub->game.mlx, cub->game.win, x, y, color);
+        my_mlx_pixel_put(&(cub->game), x, y, color);
         y++;
     }
 }
 
 void draw_floor(t_cub *cub, int x, int de)
 {
-    int y;
-    y = de;
+    int y = de;
     while (y < WIN_HEIGHT)
     {
-        mlx_pixel_put(cub->game.mlx, cub->game.win, x, y, cub->game.floor_color);
+        my_mlx_pixel_put(&(cub->game), x, y, cub->game.floor_color);
         y++;
     }
 }
@@ -56,7 +62,7 @@ void render_column(t_cub *cub, int x)
     t_tex *tex;
 
     compute_ray_parameters(cub, x, &mx, &my, &rd_x, &rd_y, &step_x, &step_y,
-                            &sd_x, &sd_y, &ddx, &ddy);
+                           &sd_x, &sd_y, &ddx, &ddy);
     perform_dda(cub, &mx, &my, &sd_x, &sd_y, ddx, ddy, step_x, step_y, &side);
     compute_wall(cub, rd_x, rd_y, step_x, step_y, mx, my, side, &perp, &lh, &ds, &de);
     texture_index = (side == 0) ? ((rd_x > 0) ? 3 : 2) : ((rd_y > 0) ? 1 : 0);
@@ -72,15 +78,13 @@ void render_column(t_cub *cub, int x)
     draw_floor(cub, x, de);
 }
 
-
 void render_map(t_cub *cub)
 {
-    int x;
-    x = 0;
+    int x = 0;
     while (x < WIN_WIDTH)
     {
         render_column(cub, x);
         x++;
     }
+    mlx_put_image_to_window(cub->game.mlx, cub->game.win, cub->game.img, 0, 0);
 }
-
