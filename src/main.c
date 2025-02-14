@@ -24,6 +24,7 @@ int game_loop(t_cub *cub)
 
 void start_game(t_cub *cub)
 {
+
     init_game(cub);
     load_textures(&cub->game, cub->map);
     mlx_hook(cub->game.win, 2, 1L << 0, handle_input, cub);

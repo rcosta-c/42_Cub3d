@@ -46,8 +46,9 @@ void    count_char_map(t_cub *cub)
 			if(cub->map->map[x][xx] == 'N' || cub->map->map[x][xx] == 'S' || cub->map->map[x][xx] == 'W' || cub->map->map[x][xx] == 'E')
 			{
 				cub->game.player = cub->map->map[x][xx];
-				cub->game.player_x = x;
-				cub->game.player_y = xx;
+				cub->game.player_x = (double)x 	+ 0.5;
+				cub->game.player_y = (double)xx + 0.5;
+				printf("estou no x=%d e no y=%d\n", x, xx);
 				counter++;
 			}
 			xx++;
