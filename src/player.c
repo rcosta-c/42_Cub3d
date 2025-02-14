@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-paiv <cde-paiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:49:46 by cde-paiv          #+#    #+#             */
-/*   Updated: 2025/02/09 15:30:09 by cde-paiv         ###   ########.fr       */
+/*   Updated: 2025/02/14 11:29:54 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int check_collision(t_map *map, double new_x, double new_y)
     int map_x = (int)new_x;
     int map_y = (int)new_y;
     
-    if (map->map[map_y][map_x] == '1')
+    if (map->map[map_x][map_y] == '1')
         return 0;
     return 1;      // Movimento permitido
 }
@@ -55,7 +55,7 @@ void update_rotation(t_cub *cub, int key)
 
     if (key == KEY_LEFT || key == KEY_RIGHT)
     {
-        rot = (key == KEY_LEFT) ? ROT_SPEED : -ROT_SPEED;
+        rot = (key == KEY_RIGHT) ? ROT_SPEED : -ROT_SPEED;
         old_dir_x = cub->game.dir_x;
         cub->game.dir_x = cub->game.dir_x * cos(rot) - cub->game.dir_y * sin(rot);
         cub->game.dir_y = old_dir_x * sin(rot) + cub->game.dir_y * cos(rot);

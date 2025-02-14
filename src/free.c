@@ -8,13 +8,13 @@ void	free_game(t_cub *cub)
 	x = 0;
 	while(x < 4)
 	{
-	//	if (cub->game.texture[x].path)
-	//		free(cub->game.texture[x].path);
+		if (cub->game.texture[x].path)
+			free(cub->game.texture[x].path);
 		x++;
 	}
-	/*free(cub->game.texture);
-	if (cub->game.addr)
-		free(cub->game.addr);*/
+	free(cub->game.texture);
+	//if (cub->game.addr)
+	//	free(cub->game.addr);
 }
 
 void	free_double_pointer(char **ptr, int max)

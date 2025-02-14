@@ -60,6 +60,7 @@ typedef struct s_map
 	char	*f_info;
 
 	int		map_lines;
+	int		map_lenght;
 	char    **map;
 	char	**file;
 	t_color	f_rgb;

@@ -3,23 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-paiv <cde-paiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:50:58 by cde-paiv          #+#    #+#             */
-/*   Updated: 2025/02/09 16:58:24 by cde-paiv         ###   ########.fr       */
+/*   Updated: 2025/02/14 11:26:56 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
+
 void perform_dda(t_cub *cub, int *map_x, int *map_y, double *side_dist_x, 
                  double *side_dist_y, double delta_dist_x, double delta_dist_y, 
                  int step_x, int step_y, int *side)
 {
-    int hit;
-    hit = 0;
-    while (!hit)
+    int hit = 0;
+    int max_iterations = cub->map->map_lenght * cub->map->map_lines; 
+    int count = 0;
+
+    while (!hit && count < max_iterations)
     {
+        count++;
+
         if (*side_dist_x < *side_dist_y)
         { 
             *side_dist_x += delta_dist_x; 
@@ -32,7 +37,12 @@ void perform_dda(t_cub *cub, int *map_x, int *map_y, double *side_dist_x,
             *map_y += step_y; 
             *side = 1; 
         }
-        if (cub->map->map[*map_y][*map_x] == '1')
+
+        // Verifica se está dentro dos limites antes de acessar a matriz
+        if (*map_x < 0 || *map_x >= cub->map->map_lines || *map_y < 0 || *map_y >= cub->map->map_lenght)
+            break;
+
+        if (cub->map->map[*map_x][*map_y] == '1' || cub->map->map[*map_x][*map_y] == 'D')
             hit = 1;
     }
 }

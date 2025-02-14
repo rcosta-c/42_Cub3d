@@ -120,17 +120,22 @@ void	extract_map(t_cub *cub)
 {
 	int x;
 	int min;
+	int	map_lenght;
 
 	x = 0;
+	map_lenght = 0;
 	update_last_line(cub);
 	min = cub->map->last_line_info;
 	cub->map->map_lines = cub->map->map_lines_counter - cub->map->last_line_info;
 	cub->map->map = malloc(sizeof(char *) * (cub->map->map_lines + 2));
 	while(x < cub->map->map_lines)
 	{
+		if (map_lenght < (int)ft_strlen(cub->map->file[min]))
+			map_lenght = (int)ft_strlen(cub->map->file[min]);
 		cub->map->map[x] = ft_strdup(cub->map->file[min]);
 		min++;
 		x++;
 	}
+	cub->map->map_lenght = map_lenght;
 	cub->map->map[x] = NULL;
 }
