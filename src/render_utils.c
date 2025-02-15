@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:50:58 by cde-paiv          #+#    #+#             */
-/*   Updated: 2025/02/14 11:26:56 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:20:06 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void compute_ray_parameters(t_cub *cub, int x, int *mx, int *my, double *rd_x, d
                               double *ddx, double *ddy)
 {
     double cam;
-    compute_ray_direction(cub, x, &cam, rd_x, rd_y);
-    compute_initial_values(cub, mx, my);
-    compute_steps_and_distances(cub, *rd_x, *rd_y, *mx, *my, step_x, step_y, sd_x, sd_y, ddx, ddy);
+    compute_ray_direction(ray.cub, x, &cam, rd_x, rd_y);
+    compute_initial_values(ray.cub, mx, my);
+    compute_steps_and_distances(ray.cub, *rd_x, *rd_y, *mx, *my, step_x, step_y, sd_x, sd_y, ddx, ddy);
 }
 
 void compute_wall(t_cub *cub, double rd_x, double rd_y, int step_x, int step_y,
