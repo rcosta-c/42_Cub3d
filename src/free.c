@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 17:02:10 by rcosta-c          #+#    #+#             */
+/*   Updated: 2025/02/15 17:02:11 by rcosta-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub.h"
 
 void	free_game(t_cub *cub)
@@ -8,13 +20,11 @@ void	free_game(t_cub *cub)
 	x = 0;
 	while(x < 4)
 	{
-		if (cub->game.texture[x].path)
-			free(cub->game.texture[x].path);
+		//if (cub->game.texture[x].path)
+		//	free(cub->game.texture[x].path);
 		x++;
 	}
 	free(cub->game.texture);
-	//if (cub->game.addr)
-	//	free(cub->game.addr);
 }
 
 void	free_double_pointer(char **ptr, int max)
@@ -49,7 +59,7 @@ void    free_cub(t_cub *cub)
 	if(cub->map->f_info)
 		free(cub->map->f_info);
 	free(cub->map);
-//	free_game(cub);
+	free_game(cub);
 	free(cub);
 }
 

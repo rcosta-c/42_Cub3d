@@ -86,7 +86,7 @@ void update_player(t_cub *cub, int key)
 int handle_input(int key, t_cub *cub)
 {
     if (key == KEY_ESC)
-        exit(0);
+        clean_exit(cub);
     update_player(cub, key);
     
     // apos atualizar, re-renderiza a cena

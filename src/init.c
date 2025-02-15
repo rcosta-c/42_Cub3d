@@ -1,4 +1,14 @@
-#include "../includes/cub.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/09 14:49:46 by cde-paiv          #+#    #+#             */
+/*   Updated: 2025/02/15 17:01:48 by rcosta-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 void    init_base(t_cub *cub, char **av)
 {
@@ -22,4 +32,6 @@ void    init_mlx(t_cub *cub)
 {
     (void)cub;
     cub->game.texture = ft_calloc(sizeof(t_tex), 4);
+    if (!cub->game.texture)
+        exit(EXIT_FAILURE);
 }

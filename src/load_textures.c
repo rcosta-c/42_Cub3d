@@ -16,11 +16,7 @@ void load_textures(t_cub *cub)
 {
     int i = 0;
 
-    // Aloca espaço para 4 texturas
-    cub->game.texture = malloc(sizeof(t_tex) * 4);
-    if (!cub->game.texture)
-        exit(EXIT_FAILURE);
-    
+  
     // Associa cada textura ao respectivo arquivo
     cub->game.texture[0].path = cub->map->no_file;
     cub->game.texture[1].path = cub->map->so_file;
