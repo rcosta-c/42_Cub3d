@@ -6,17 +6,18 @@
 /*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:31 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/15 17:36:03 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:02:32 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
+
 int	map_copy(t_cub *cub, char *file)
 {
 	char	*line;
 	int		x;
-	int		fd;
+	int     fd;
 
 	x = 0;
 	fd = open(file, O_RDONLY);
@@ -31,20 +32,22 @@ int	map_copy(t_cub *cub, char *file)
 			break ;
 		}
 		else
+		{
 			cub->map->file[x] = ft_strdup(line);
+		}
 		free(line);
 		x++;
 	}
 	cub->map->file[x] = '\0';
 	close(fd);
-	return (x);
+	return(x);
 }
 
 int	map_1st_reading(char *file, t_cub *cub)
 {
 	char	*line;
 	int		x;
-	int		fd;
+	int     fd;
 
 	x = 0;
 	fd = open(file, O_RDONLY);
@@ -62,5 +65,7 @@ int	map_1st_reading(char *file, t_cub *cub)
 		x++;
 	}
 	close(fd);
-	return (x);
+	return(x);
 }
+
+
