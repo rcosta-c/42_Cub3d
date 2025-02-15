@@ -116,7 +116,7 @@ int		clean_exit(t_cub *cub);
 void	init_game(t_cub *cub);
 
 
-void load_textures(t_game *game, t_map *map);
+void load_textures(t_cub *cub);
 void render_map(t_cub *cub);
 int check_collision(t_map *map, double new_x, double new_y);
 void update_player(t_cub *cub, int key);

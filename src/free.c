@@ -49,6 +49,7 @@ void    free_cub(t_cub *cub)
 	if(cub->map->f_info)
 		free(cub->map->f_info);
 	free(cub->map);
+//	free_game(cub);
 	free(cub);
 }
 

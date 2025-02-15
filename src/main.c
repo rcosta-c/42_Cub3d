@@ -26,37 +26,11 @@ void start_game(t_cub *cub)
 {
 
     init_game(cub);
-    load_textures(&cub->game, cub->map);
+    load_textures(cub);
     mlx_hook(cub->game.win, 2, 1L << 0, handle_input, cub);
     mlx_loop_hook(cub->game.mlx, game_loop, cub);
     mlx_loop(cub->game.mlx);
 }
-
-void	print_tests(t_cub *cub, char **av)
-{
-		printf("numero de linhas = %d\n ficheiro = %s", cub->map->map_lines_counter, av[1]);
-
-		printf("\n\nNO = %s\n", cub->map->no_file);
-		printf("SO = %s\n", cub->map->so_file);
-		printf("WE = %s\n", cub->map->we_file);
-		printf("EA = %s\n", cub->map->ea_file);
-
-		printf("C = %s\n", cub->map->c_info);
-		printf("F = %s\n", cub->map->f_info);
-		printf("valores em f_rgb - r=%d  g=%d  b=%d\n\n", cub->map->f_rgb.r, cub->map->f_rgb.g, cub->map->f_rgb.b);
-		printf("valores em c_rgb - r=%d  g=%d  b=%d\n\n", cub->map->c_rgb.r, cub->map->c_rgb.g, cub->map->c_rgb.b);
-		printf("maplinecounter=%d\n", cub->map->map_lines_counter);
-		printf("last_line_info=%d\n", cub->map->last_line_info);
-        printf("map_lenght=%d\n", cub->map->map_lenght);
-        printf("maplines=%d\n", cub->map->map_lines);
-		int xx = 0;
-		while(cub->map->map[xx])
-		{
-			printf("line%d=%s\n", xx, cub->map->map[xx]);
-			xx++;
-		}	
-}
-
 
 int main(int ac, char **av)
 {
@@ -80,7 +54,6 @@ int main(int ac, char **av)
     extract_map(cub);
     analize_map(cub);
     init_mlx(cub);
-    print_tests(cub, av);
     start_game(cub);
     free_cub(cub);
     return (0);
