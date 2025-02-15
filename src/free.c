@@ -6,7 +6,7 @@
 /*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:10 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/15 17:02:11 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:03:27 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 
 void	free_game(t_cub *cub)
 {
-	int x;
-
-	(void)cub;
-	x = 0;
-	while(x < 4)
-	{
-		//if (cub->game.texture[x].path)
-		//	free(cub->game.texture[x].path);
-		x++;
-	}
 	free(cub->game.texture);
 }
 
