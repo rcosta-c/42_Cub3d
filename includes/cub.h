@@ -26,6 +26,38 @@
 #define MOVE_SPEED 0.1
 #define ROT_SPEED 0.05
 
+typedef struct s_ray
+{
+	double	cam;
+	double	rd_x;
+	double	rd_y;
+	double	sd_x;
+	double	sd_y;
+	double	ddx;
+	double	ddy;
+	double	perp;
+	double	wallX;
+	double	delta_dist_y;
+	double	delta_dist_x;
+	double	side_dist_y;
+	double	side_dist_x;
+	int		map_x;
+	int		map_y;
+	int		mx;
+	int		my;
+	int		step_x;
+	int		step_y;
+	int		side;
+    int		lh;
+	int		ds;
+	int		de;
+	int		texture_index;
+	int		texX;
+	int		texY;
+
+
+}	t_ray;
+
 typedef struct s_color
 {
 	int	r;
@@ -108,32 +140,53 @@ typedef struct s_cub
 	t_map   *map;
 	t_error	error;
 	t_game	game;
+	t_ray	ray;
 }   t_cub;
 
+/*
+//render_map
+void	draw_floor(t_cub *cub, int x);
+void	render_column(t_cub *cub, int x);
+void	render_map(t_cub *cub);
+
+
+//render_utils
+void perform_dda(t_cub *cub);
+void compute_ray_direction(t_cub *cub, int x);
+void compute_initial_values(t_cub *cub);
+void compute_steps_and_distances(t_cub *cub);
+void compute_ray_parameters(t_cub *cub, int x);
+void compute_wall(t_cub *cub);
+*/
+void	render_column(t_cub *cub, int x);
+void	draw_floor(t_cub *cub, int x, int de);
+//void	draw_wall(t_cub *cub, int x, int ds, int de, t_tex *tex, int lh, int texX);
+void	draw_ceiling(t_cub *cub, int x, int ds);
+void	my_mlx_pixel_put(t_game *game, int x, int y, int color);
+void compute_ray_direction(t_cub *cub, int x);
+void compute_initial_values(t_cub *cub, int *mx, int *my);
+
+void	render_map(t_cub *cub);
+//void perform_dda(t_cub *cub);
+void perform_dda(t_cub *cub, int *map_x, int *map_y, double *side_dist_x, 
+                 double *side_dist_y, double delta_dist_x, double delta_dist_y, 
+                 int step_x, int step_y, int *side);
+void compute_steps_and_distances(t_cub *cub, double rd_x, double rd_y, int mx, int my);
+void compute_ray_parameters(t_cub *cub, int x);
+//void compute_wall(t_cub *cub, double rd_x, double rd_y, int step_x, int step_y,
+  //                int mx, int my, int side, double *perp, int *lh, int *ds, int *de);
+void compute_wall(t_cub *cub);
+void draw_wall(t_cub *cub, int x, t_tex *tex);
 
 //game
 int		clean_exit(t_cub *cub);
 void	init_game(t_cub *cub);
-
-
 void load_textures(t_cub *cub);
 void render_map(t_cub *cub);
 int check_collision(t_map *map, double new_x, double new_y);
 void update_player(t_cub *cub, int key);
 int handle_input(int key, t_cub *cub);
-void perform_dda(t_cub *cub, int *map_x, int *map_y, double *side_dist_x, 
-                 double *side_dist_y, double delta_dist_x, double delta_dist_y, 
-                 int step_x, int step_y, int *side);
-void compute_ray_direction(t_cub *cub, int x, double *cam, double *rd_x, double *rd_y);
-void compute_initial_values(t_cub *cub, int *mx, int *my);
-void compute_steps_and_distances(t_cub *cub, double rd_x, double rd_y, int mx, int my,
-                                 int *step_x, int *step_y, double *sd_x, double *sd_y,
-                                 double *ddx, double *ddy);
-void compute_ray_parameters(t_cub *cub, int x, int *mx, int *my, double *rd_x, double *rd_y,
-                              int *step_x, int *step_y, double *sd_x, double *sd_y,
-                              double *ddx, double *ddy);
-void compute_wall(t_cub *cub, double rd_x, double rd_y, int step_x, int step_y,
-                  int mx, int my, int side, double *perp, int *lh, int *ds, int *de);
+
 
 //init
 void    init_base(t_cub *cub, char **av);
@@ -152,6 +205,13 @@ void	search_coords_player(t_cub *cub, int x);
 void	copy_map_file(t_cub *cub, int x, int coord);
 void	copy_map_file_helper(t_cub *cub, int x, int coord, char *temp);
 void	validate_color(t_cub *cub);
+
+//parse_map utils2
+void	validate_color(t_cub *cub);
+void	validate_info(t_cub *cub);
+void	split_color_f(t_cub *cub);
+void	copy_map_file(t_cub *cub, int x, int coord);
+void	copy_map_file_helper(t_cub *cub, int x, int coord, char *temp);
 
 
 //map_analyzer1
