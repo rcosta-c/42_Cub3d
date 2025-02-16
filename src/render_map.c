@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cde-paiv <cde-paiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:50:54 by cde-paiv          #+#    #+#             */
-/*   Updated: 2025/02/16 09:23:25 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:57:02 by cde-paiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,28 @@ void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_ceiling(t_cub *cub, int x, int ds)
+static void	draw_column_parts(t_cub *cub, int x, t_ray *ray)
 {
 	int	y;
+	int	d;
+	int	tex_y;
+	int	color;
 
 	y = 0;
-	while (y < ds)
+	while (y++ < ray->ds)
 	{
 		my_mlx_pixel_put(&(cub->game), x, y, cub->game.ceiling_color);
+	}
+	y = ray->ds;
+	while (y < ray->de)
+	{
+		d = y * 256 - WIN_HEIGHT * 128 + ray->lh * 128;
+		tex_y = ((d * ray->tex->height) / ray->lh) / 256;
+		color = ((int *)ray->tex->addr)[tex_y * ray->tex->width + ray->tex_x];
+		my_mlx_pixel_put(&(cub->game), x, y, color);
 		y++;
 	}
-}
-
-void draw_wall(t_cub *cub, int x, t_tex *tex)
-{
-    int y = cub->ray.ds;
-    int d, texY, color;
-
-    while (y < cub->ray.de)
-    {
-        d = y * 256 - WIN_HEIGHT * 128 + cub->ray.lh * 128;
-        texY = ((d * tex->height) / cub->ray.lh) / 256;
-        color = ((int *)tex->addr)[texY * tex->width + cub->ray.texX];
-        my_mlx_pixel_put(&(cub->game), x, y, color);
-        y++;
-    }
-}
-
-void	draw_floor(t_cub *cub, int x, int de)
-{
-	int	y;
-
-	y = de;
+	y = ray->de;
 	while (y < WIN_HEIGHT)
 	{
 		my_mlx_pixel_put(&(cub->game), x, y, cub->game.floor_color);
@@ -59,25 +49,41 @@ void	draw_floor(t_cub *cub, int x, int de)
 	}
 }
 
+static void	setup_ray(t_cub *cub, int x, t_ray *ray)
+{
+	compute_ray_parameters(cub, x, ray);
+	perform_dda(cub, ray);
+	compute_wall(cub, ray);
+	if (ray->side == 0)
+	{
+		if (ray->rd_x > 0)
+			ray->tex = &cub->game.texture[3];
+		else
+			ray->tex = &cub->game.texture[2];
+	}
+	else
+	{
+		if (ray->rd_y > 0)
+			ray->tex = &cub->game.texture[1];
+		else
+			ray->tex = &cub->game.texture[0];
+	}
+	if (ray->side == 0)
+		ray->wall_x = cub->game.player_y + ray->perp * ray->rd_y;
+	else
+		ray->wall_x = cub->game.player_x + ray->perp * ray->rd_x;
+	ray->wall_x = ray->wall_x - floor(ray->wall_x);
+	ray->tex_x = (int)(ray->wall_x * (double)ray->tex->width);
+	if ((ray->side == 0 && ray->rd_x > 0) || (ray->side == 1 && ray->rd_y < 0))
+		ray->tex_x = ray->tex->width - ray->tex_x - 1;
+}
+
 void	render_column(t_cub *cub, int x)
 {
-	t_tex *tex;
-	
-	compute_ray_parameters(cub, x);
-	perform_dda(cub, &cub->ray.mx, &cub->ray.my, &cub->ray.sd_x, &cub->ray.sd_y,
-		cub->ray.ddx, cub->ray.ddy, cub->ray.step_x, cub->ray.step_y, &cub->ray.side);
-	compute_wall(cub);
-	cub->ray.texture_index = (cub->ray.side == 0) ? ((cub->ray.rd_x > 0) ? 3 : 2) : ((cub->ray.rd_y > 0) ? 1 : 0);
-	tex = &cub->game.texture[cub->ray.texture_index];
-	cub->ray.wallX = (cub->ray.side == 0) ? cub->game.player_y + cub->ray.perp * cub->ray.rd_y :
-		cub->game.player_x + cub->ray.perp * cub->ray.rd_x;
-	cub->ray.wallX -= floor(cub->ray.wallX);
-	cub->ray.texX = (int)(cub->ray.wallX * (double)tex->width);
-	if ((cub->ray.side == 0 && cub->ray.rd_x > 0) || (cub->ray.side == 1 && cub->ray.rd_y < 0))
-		cub->ray.texX = tex->width - cub->ray.texX - 1;
-	draw_ceiling(cub, x, cub->ray.ds);
-	draw_wall(cub, x, tex);
-	draw_floor(cub, x, cub->ray.de);
+	t_ray	ray;
+
+	setup_ray(cub, x, &ray);
+	draw_column_parts(cub, x, &ray);
 }
 
 void	render_map(t_cub *cub)
@@ -90,6 +96,5 @@ void	render_map(t_cub *cub)
 		render_column(cub, x);
 		x++;
 	}
-	mlx_put_image_to_window(cub->game.mlx, cub->game.win,
-			cub->game.img, 0, 0);
+	mlx_put_image_to_window(cub->game.mlx, cub->game.win, cub->game.img, 0, 0);
 }

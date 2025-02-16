@@ -6,13 +6,13 @@
 /*   By: cde-paiv <cde-paiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:15:54 by cde-paiv          #+#    #+#             */
-/*   Updated: 2025/02/15 17:29:58 by cde-paiv         ###   ########.fr       */
+/*   Updated: 2025/02/16 12:57:33 by cde-paiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-static int	create_rgb(int r, int g, int b)
+int	create_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
@@ -50,7 +50,7 @@ void	put_pixel_to_img(t_cub *cub, int x, int y, int color)
 	}
 }
 
-void	player_moves(t_cub *cub)
+void	player_moves_vertical(t_cub *cub)
 {
 	if (cub->game.player == 'N')
 	{
@@ -59,13 +59,17 @@ void	player_moves(t_cub *cub)
 		cub->game.plane_x = 0.8;
 		cub->game.plane_y = 0.0;
 	}
-	if (cub->game.player == 'S')
+	else if (cub->game.player == 'S')
 	{
 		cub->game.dir_y = 1.0;
 		cub->game.dir_x = 0;
 		cub->game.plane_x = -0.8;
 		cub->game.plane_y = 0.0;
 	}
+}
+
+void	player_moves_horizontal(t_cub *cub)
+{
 	if (cub->game.player == 'W')
 	{
 		cub->game.dir_y = 0;
@@ -73,28 +77,11 @@ void	player_moves(t_cub *cub)
 		cub->game.plane_x = 0.1;
 		cub->game.plane_y = -0.8;
 	}
-	if (cub->game.player == 'E')
+	else if (cub->game.player == 'E')
 	{
 		cub->game.dir_y = 0;
 		cub->game.dir_x = 1.0;
 		cub->game.plane_x = 0.1;
 		cub->game.plane_y = 0.8;
 	}
-}
-
-void	init_game(t_cub *cub)
-{
-	cub->game.mlx = mlx_init();
-	cub->game.win = mlx_new_window(cub->game.mlx,
-			WIN_WIDTH, WIN_HEIGHT, "Cub3D");
-	cub->game.img = mlx_new_image(cub->game.mlx, WIN_WIDTH, WIN_HEIGHT);
-	cub->game.addr = mlx_get_data_addr(cub->game.img,
-			&cub->game.bpp,
-			&cub->game.line_len,
-			&cub->game.endian);
-	player_moves(cub);
-	cub->game.floor_color = create_rgb(cub->map->f_rgb.r,
-			cub->map->f_rgb.g, cub->map->f_rgb.b);
-	cub->game.ceiling_color = create_rgb(cub->map->c_rgb.r,
-			cub->map->c_rgb.g, cub->map->c_rgb.b);
 }
