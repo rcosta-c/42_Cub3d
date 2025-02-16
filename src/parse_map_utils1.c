@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-paiv <cde-paiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:28 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/16 15:05:22 by cde-paiv         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:51:11 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,18 @@ void	search_coords_player(t_cub *cub, int x)
 
 void	search_coords(t_cub *cub, int x)
 {
-	if (ft_strlen(cub->map->file[x]) > 6)
+	if (ft_strlen(cub->map->file[x]) > 5)
 	{
 		if (cub->map->file[x][0] == 'N' || cub->map->file[x][0] == 'S'
 			|| cub->map->file[x][0] == 'E' || cub->map->file[x][0] == 'W')
 			search_coords_player(cub, x);
-		else if (cub->map->file[x][0] == 'C'
-				&& cub->map->file[x][1] == ' ')
+		else if (cub->map->file[x][0] == 'C')
 			copy_map_file(cub, x, 5);
 		else if (cub->map->file[x][0] == 'F'
-				&& cub->map->file[x][1] == ' ')
+			&& cub->map->file[x][1] == ' ')
 			copy_map_file(cub, x, 4);
 	}
-	else if ((ft_strlen(cub->map->file[x]) < 6
-			&& ft_strlen(cub->map->file[x]) > 0
-			&& cub->map->file[x][0] != '\n') || (!cub->map->so_file
-			|| !cub->map->no_file || !cub->map->we_file
-			|| !cub->map->ea_file || !cub->map->f_info
-			|| !cub->map->c_info))
-	{
-		cub->error.char_invalid = true;
-		cub->error.valid_map = false;
-		free_exit(cub, "Invalid Coords");
-	}
+	search_coords_error(cub, x);
 }
 
 void	split_color_c(t_cub *cub)
@@ -92,14 +81,14 @@ void	split_color_process(t_cub *cub)
 
 	sign = 0;
 	x = 2;
-	while (ft_strlen(cub->map->f_info) > 2 && cub->map->f_info[x])
+	while (cub->map->f_info[x])
 	{
 		if (cub->map->f_info[x] == ',')
 			sign++;
 		x++;
 	}
 	if (sign == 2)
-		split_color_c(cub);
+		split_color_f(cub);
 	sign = 0;
 	x = 2;
 	while (cub->map->c_info[x])
@@ -122,6 +111,7 @@ void	map_info_sniffer(t_cub *cub)
 		search_coords(cub, x);
 		x++;
 	}
+	search_coords_error_2(cub);
 	split_color_process(cub);
 	validate_color(cub);
 	if (cub->error.valid_map == false)

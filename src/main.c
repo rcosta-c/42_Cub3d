@@ -6,7 +6,7 @@
 /*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:02 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/15 17:43:00 by cde-paiv         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:07:48 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,17 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		printf("Error! Only 1 map as argument\n");
+		printf("Error!\nOnly 1 map as argument\n");
+		return (1);
+	}
+	if (validate_avmap(av[1]) == false)
+	{
+		printf("Error!\nNot a Cub file\n");
 		return (1);
 	}
 	cub = ft_calloc(1, sizeof(t_cub));
 	if (!cub)
 		return (1);
-	if (validate_avmap(av[1]) == false)
-		free_exit(cub, "Not a Cub file");
 	init_base(cub, av);
 	if (cub->map->map_lines_counter == 0)
 		free_exit(cub, "Empty Map");

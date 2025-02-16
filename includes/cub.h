@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-paiv <cde-paiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 14:23:00 by cde-paiv          #+#    #+#             */
-/*   Updated: 2025/02/16 14:31:26 by cde-paiv         ###   ########.fr       */
+/*   Created: 2025/02/16 16:56:02 by rcosta-c          #+#    #+#             */
+/*   Updated: 2025/02/16 17:05:03 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB_H
+# define CUB_H
+
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_ESC 65307
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.05
 
 # include "../lib/mlx/mlx.h"
 # include "../lib/libft/libft.h"
@@ -24,19 +36,6 @@
 # include <ctype.h>
 # include <string.h>
 # include <math.h>
-//#include <mlx.h>
-
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-#define KEY_LEFT 65361
-#define KEY_RIGHT 65363
-#define KEY_ESC 65307
-#define MOVE_SPEED 0.1
-#define ROT_SPEED 0.05
 
 typedef struct s_color
 {
@@ -143,40 +142,56 @@ typedef struct s_cub
 	t_game	game;
 }	t_cub;
 
-//game
-int	create_rgb(int r, int g, int b);
-int	clean_exit(t_cub *cub);
-void	init_game(t_cub *cub);
-void	player_moves_vertical(t_cub *cub);
-void	player_moves_horizontal(t_cub *cub);
-
-void	load_textures(t_cub *cub);
+//render_map
+void	my_mlx_pixel_put(t_game *game, int x, int y, int color);
+void	render_column(t_cub *cub, int x);
 void	render_map(t_cub *cub);
-int	check_collision(t_map *map, double new_x, double new_y);
-void	update_player(t_cub *cub, int key);
-int	handle_input(int key, t_cub *cub);
+
+//render_utils
 void	perform_dda(t_cub *cub, t_ray *ray);
 void	compute_ray_direction(t_cub *cub, int x, t_ray *ray);
-void	compute_initial_values(t_cub *cub, t_ray *ray);
-void	compute_steps_and_distances(t_cub *cub, t_ray *ray);
 void	compute_ray_parameters(t_cub *cub, int x, t_ray *ray);
 void	compute_wall(t_cub *cub, t_ray *ray);
+
+//render_utils1
+void	compute_initial_values(t_cub *cub, t_ray *ray);
+void	compute_steps_and_distances(t_cub *cub, t_ray *ray);
+
+//game
+int		create_rgb(int r, int g, int b);
+int		clean_exit(t_cub *cub);
+void	put_pixel_to_img(t_cub *cub, int x, int y, int color);
+void	player_moves_vertical(t_cub *cub);
+void	player_moves_horizontal(t_cub *cub);
+void	load_textures(t_cub *cub);
+int		handle_input(int key, t_cub *cub);
 
 //init
 void	init_base(t_cub *cub, char **av);
 void	init_mlx(t_cub *cub);
+void	init_game(t_cub *cub);
 
 //parse_maps
-int	map_1st_reading(char *file, t_cub *cub);
-int	map_copy(t_cub *cub, char *file);
+int		map_1st_reading(char *file, t_cub *cub);
+int		map_copy(t_cub *cub, char *file);
 
 //parse_map_utils1//
 void	map_info_sniffer(t_cub *cub);
 void	search_coords(t_cub *cub, int x);
 void	search_coords_player(t_cub *cub, int x);
+void	split_color_c(t_cub *cub);
+void	split_color_process(t_cub *cub);
+
+//parse_map_utils2
+void	split_color_f(t_cub *cub);
 void	copy_map_file(t_cub *cub, int x, int coord);
 void	copy_map_file_helper(t_cub *cub, int x, int coord, char *temp);
+
+//parse_map_utils3
+void	search_coords_error(t_cub *cub, int x);
+void	search_coords_error_2(t_cub *cub);
 void	validate_color(t_cub *cub);
+void	validate_info(t_cub *cub);
 
 //map_analyzer1
 void	extract_map(t_cub *cub);
@@ -186,6 +201,14 @@ void	analize_char_map(t_cub *cub, int x);
 
 //map_analyzer2
 void	check_map_walls(t_cub *cub);
+void	update_last_line(t_cub *cub);
+
+//map_analyzer3
+void	check_walls_p1_p1(t_cub *cub, char **fixed_map);
+void	check_walls_p1(t_cub *cub, int cols, char **fixed_map);
+void	check_walls_p2(t_cub *cub, int cols, char **fixed_map);
+void	check_walls_p3(t_cub *cub, char **fixed_map);
+void	check_walls_p4(t_cub *cub, int cols, char **fixed_map);
 
 //free
 void	free_cub(t_cub *cub);

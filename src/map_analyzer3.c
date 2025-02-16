@@ -6,13 +6,13 @@
 /*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:22 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/15 18:25:51 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:53:31 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-static void	check_walls_p1_p1(t_cub *cub, char **fixed_map)
+void	check_walls_p1_p1(t_cub *cub, char **fixed_map)
 {
 	int	i;
 	int	j;

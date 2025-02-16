@@ -65,10 +65,13 @@ SRCS        :=      lib/libft/ft_lstlast.c \
                           src/init.c \
                           src/game.c \
                           src/parse_map_utils1.c \
+                          src/parse_map_utils2.c \
+                          src/parse_map_utils3.c \
                           src/free.c \
-                          src/map_analyzer2.c \
                           src/parse_map.c \
                           src/map_analyzer1.c \
+                          src/map_analyzer2.c \
+                          src/map_analyzer3.c \
                           src/load_textures.c \
                           src/player.c \
                           src/render_map.c \

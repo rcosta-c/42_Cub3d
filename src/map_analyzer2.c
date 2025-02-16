@@ -6,7 +6,7 @@
 /*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:26 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/15 18:25:59 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:50:13 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	update_last_line(t_cub *cub)
 
 	last = cub->map->last_line_info;
 	last++;
+	if (!cub->map->file[last])
+		free_exit(cub, "Invalid Map");
 	if (ft_strlen(cub->map->file[last]) >= 1 && cub->map->file[last][0] == '\n')
 		last++;
 	if (ft_strlen(cub->map->file[last]) > 1)
