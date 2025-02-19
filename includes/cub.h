@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 16:56:02 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/16 17:05:03 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:58:32 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,18 +180,25 @@ void	map_info_sniffer(t_cub *cub);
 void	search_coords(t_cub *cub, int x);
 void	search_coords_player(t_cub *cub, int x);
 void	split_color_c(t_cub *cub);
-void	split_color_process(t_cub *cub);
-
+void	split_color_process_p1(t_cub *cub);
+void	split_color_process_p2(t_cub *cub);
 //parse_map_utils2
 void	split_color_f(t_cub *cub);
 void	copy_map_file(t_cub *cub, int x, int coord);
 void	copy_map_file_helper(t_cub *cub, int x, int coord, char *temp);
+void	is_readable_texture(char *file, t_cub *cub);
 
 //parse_map_utils3
 void	search_coords_error(t_cub *cub, int x);
 void	search_coords_error_2(t_cub *cub);
 void	validate_color(t_cub *cub);
 void	validate_info(t_cub *cub);
+
+//parse_map_utils4
+void	count_spaces(char *line, t_cub *cub);
+bool	check_end_wall(char *line);
+bool	check_begin_wall(char *line);
+void	check_wall_integrity(t_cub *cub);
 
 //map_analyzer1
 void	extract_map(t_cub *cub);

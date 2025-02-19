@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:28 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/16 16:53:40 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:00:22 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,24 @@ void	split_color_f(t_cub *cub)
 	cub->map->f_rgb.r = ft_atoi(res[0]);
 	cub->map->f_rgb.g = ft_atoi(res[1]);
 	cub->map->f_rgb.b = ft_atoi(res[2]);
+	while (res[x])
+	{
+		free(res[x]);
+		x++;
+	}
+	free(res);
+}
+
+void	split_color_c(t_cub *cub)
+{
+	char	**res;
+	int		x;
+
+	x = 0;
+	res = ft_split(cub->map->c_info, ',');
+	cub->map->c_rgb.r = ft_atoi(res[0]);
+	cub->map->c_rgb.g = ft_atoi(res[1]);
+	cub->map->c_rgb.b = ft_atoi(res[2]);
 	while (res[x])
 	{
 		free(res[x]);

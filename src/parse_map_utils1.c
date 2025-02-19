@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:28 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/16 16:51:11 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:01:59 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,28 @@ void	search_coords(t_cub *cub, int x)
 	search_coords_error(cub, x);
 }
 
-void	split_color_c(t_cub *cub)
+void	split_color_process_p2(t_cub *cub)
 {
-	char	**res;
-	int		x;
+	int	x;
+	int	sign;
 
-	x = 0;
-	res = ft_split(cub->map->c_info, ',');
-	cub->map->c_rgb.r = ft_atoi(res[0]);
-	cub->map->c_rgb.g = ft_atoi(res[1]);
-	cub->map->c_rgb.b = ft_atoi(res[2]);
-	while (res[x])
+	sign = 0;
+	x = 2;
+	while (cub->map->c_info[x])
 	{
-		free(res[x]);
+		if (cub->map->c_info[x] == ',' && cub->map->c_info[x + 1] == ',')
+			free_exit(cub, "Invalid Map(Color range)");
+		if (cub->map->c_info[x] == ',')
+			sign++;
 		x++;
 	}
-	free(res);
+	if (sign != 2)
+		free_exit(cub, "Invalid Map(Color error)");
+	if (sign == 2)
+		split_color_c(cub);
 }
 
-void	split_color_process(t_cub *cub)
+void	split_color_process_p1(t_cub *cub)
 {
 	int	x;
 	int	sign;
@@ -83,22 +86,16 @@ void	split_color_process(t_cub *cub)
 	x = 2;
 	while (cub->map->f_info[x])
 	{
+		if (cub->map->f_info[x] == ',' && cub->map->f_info[x + 1] == ',')
+			free_exit(cub, "Invalid Map(Color range)");
 		if (cub->map->f_info[x] == ',')
 			sign++;
 		x++;
 	}
+	if (sign != 2)
+		free_exit(cub, "Invalid Map(Color error)");
 	if (sign == 2)
 		split_color_f(cub);
-	sign = 0;
-	x = 2;
-	while (cub->map->c_info[x])
-	{
-		if (cub->map->c_info[x] == ',')
-			sign++;
-		x++;
-	}
-	if (sign == 2)
-		split_color_c(cub);
 }
 
 void	map_info_sniffer(t_cub *cub)
@@ -112,11 +109,16 @@ void	map_info_sniffer(t_cub *cub)
 		x++;
 	}
 	search_coords_error_2(cub);
-	split_color_process(cub);
+	split_color_process_p1(cub);
+	split_color_process_p2(cub);
 	validate_color(cub);
 	if (cub->error.valid_map == false)
 		free_exit(cub, "Invalid info for Coords");
 	validate_color(cub);
+	is_readable_texture(cub->map->no_file, cub);
+	is_readable_texture(cub->map->so_file, cub);
+	is_readable_texture(cub->map->we_file, cub);
+	is_readable_texture(cub->map->ea_file, cub);
 	if (cub->error.valid_map == false)
 		free_exit(cub, "Invalid Color");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_analyzer2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:26 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/16 16:50:13 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:02:08 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	check_map_walls(t_cub *cub)
 	char	**fixed_map;
 
 	i = 0;
+	check_wall_integrity(cub);
 	cols = get_max_width(cub->map->map, cub->map->map_lines);
 	fixed_map = ft_calloc(sizeof(char *), cub->map->map_lines + 2);
 	check_walls_p1(cub, cols, fixed_map);

@@ -72,6 +72,7 @@ SRCS        :=      lib/libft/ft_lstlast.c \
                           src/map_analyzer1.c \
                           src/map_analyzer2.c \
                           src/map_analyzer3.c \
+                          src/map_analyzer4.c \
                           src/load_textures.c \
                           src/player.c \
                           src/render_map.c \

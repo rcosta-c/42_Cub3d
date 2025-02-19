@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:28 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/16 16:53:54 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:00:47 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,12 @@ void	validate_info(t_cub *cub)
 		cub->error.valid_map = false;
 	else if (!cub->map->we_file || ft_strlen(cub->map->we_file) < 8)
 		cub->error.valid_map = false;
+}
+
+void	is_readable_texture(char *file, t_cub *cub)
+{
+	if (!file)
+		free_exit(cub, "Invalid Map(Texture missing)");
+	if (access(file, F_OK) != 0 && access(file, R_OK) != 0)
+		free_exit(cub, "Invalid Map(Texture path/access error)");
 }

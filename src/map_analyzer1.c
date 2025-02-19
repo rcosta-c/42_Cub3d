@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_analyzer1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcosta-c <rcosta-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcosta-c <rcosta-c@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:02:22 by rcosta-c          #+#    #+#             */
-/*   Updated: 2025/02/15 18:27:16 by rcosta-c         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:26:36 by rcosta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,27 +72,11 @@ void	count_char_map(t_cub *cub)
 void	analize_empty_lines(t_cub *cub)
 {
 	int	x;
-	int	xx;
-	int	counter;
 
 	x = 0;
 	while (cub->map->map[x] && x < cub->map->map_lines)
 	{
-		xx = 0;
-		counter = 0;
-		while (cub->map->map[x][xx])
-		{
-			if (ft_strlen(cub->map->map[x]) > 0
-				&& (cub->map->map[x][xx] != ' '
-				|| cub->map->map[x][xx] != '\n'))
-				counter++;
-			xx++;
-		}
-		if (counter == 0)
-		{
-			cub->error.valid_map = false;
-			return ;
-		}
+		count_spaces(cub->map->map[x], cub);
 		x++;
 	}
 }
