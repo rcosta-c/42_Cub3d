@@ -1,7 +1,7 @@
-NO ./img/notexist.jpg
-SO ./img/note479xist.jpg
-WE ./img/not767exist.jpg
-EA ./img/no123123texist.jpg
+NO ./img/not_file_wall1.xpm
+SO ./img/not_file_wall2.xpm
+WE ./img/not_file_wall3.xpm
+EA ./img/not_file_wall4.xpm
 
 F 220,100,0
 C 225,30,0

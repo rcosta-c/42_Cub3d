@@ -1,10 +1,10 @@
 F 220,100,0
 C 225,30,0
 
-NO ./img/Born2bePickle.xpm
-SO ./img/tools-man.xpm
-WE ./img/Born2bePickle.xpm
-EA ./img/tools-man.xpm
+NO ./img/color1.xpm
+SO ./img/color2.xpm
+WE ./img/color1.xpm
+EA ./img/color2.xpm
 
         1111111111111111111111111
         1000000000110000000000001

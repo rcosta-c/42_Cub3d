@@ -1,7 +1,7 @@
-NO ./img/Born2bePickle.jpg
-SO ./img/tools-man.png
-WE ./img/Born2bePickle.jpg
-EA ./img/Born2bePickle.jpg
+NO ./img/wall1.xpm
+SO ./img/wall2.xpm
+WE ./img/wall3.xpm
+EA ./img/wall4.xpm
 
 C 220,100,0
 

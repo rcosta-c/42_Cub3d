@@ -1,10 +1,10 @@
-NO ./img/one64.xpm
-SO ./img/p64.xpm
-WE ./img/coin64.xpm
-EA ./img/zero64.xpm
+NO ./img/wall1.xpm
+SO ./img/wall2.xpm
+WE ./img/wall3.xpm
+EA ./img/wall4.xpm
 
-F 220,100,0
-C 225,30,0
+F 124,101,22
+C 180,180,170
 
 1111111111111111111111111111111
 1000000000S0000110000000000001

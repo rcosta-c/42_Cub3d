@@ -1,7 +1,7 @@
-NO ./img/one64.xpm
-SO ./img/one64.xpm
-WE ./img/coin64.xpm
-EA ./img/coin64.xpm
+NO ./img/wall1.xpm
+SO ./img/wall2.xpm
+WE ./img/wall3.xpm
+EA ./img/wall4.xpm
 
 F 220,100,0
 C 225,30,0
