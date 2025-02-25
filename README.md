@@ -1,4 +1,4 @@
-<h1>(Minimal)Cub3D</h1>
+<h1>Minimal Cub3D</h1>
 
 <p><strong>Cub3D</strong> is a project developed at 42 Porto as part of the <em>Computer Graphics</em> curriculum. Inspired by the classic <em>Wolfenstein 3D</em>, this project explores the <em>raycasting</em> technique to render a 3D environment from a 2D map without relying on advanced graphics libraries. This is a minimalistic implementation, focusing on the core mechanics rather than complex visual effects.</p>
 
